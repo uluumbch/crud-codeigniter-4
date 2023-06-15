@@ -19,16 +19,24 @@
             <div class="col-12">
                 <h2>Tambah Data Tugas</h2>
             </div>
-
+            <?= validation_list_errors() ?>
             <div class="col-3">
                 <form action="<?= base_url('/tambahdata') ?>" method="post">
                     <div class="mb-3">
                         <label for="nama_tugas" class="form-label">Nama Tugas</label>
-                        <input type="text" class="form-control" id="nama_tugas" name="nama_tugas">
+                        <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" value="<?= old("nama_tugas") ?>">
+                        <span class="text-danger">
+                            <?= validation_show_error('nama_tugas') ?>
+                        </span>
+                       
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi_tugas" class="form-label">Deskripsi Tugas</label>
-                        <textarea class="form-control" id="deskripsi_tugas" rows="3" name="deskripsi_tugas"></textarea>
+                        <textarea class="form-control" id="deskripsi_tugas" rows="3" name="deskripsi_tugas"><?= old("deskripsi_tugas") ?></textarea>
+                        <span class="text-danger">
+                            <?= validation_show_error('deskripsi_tugas') ?>
+                        </span>
+                        
                     </div>
                     
                     <button type="submit" class="btn btn-primary">tambah</button>

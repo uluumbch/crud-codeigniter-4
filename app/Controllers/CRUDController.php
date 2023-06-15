@@ -7,6 +7,7 @@ use App\Models\TugasModel;
 
 class CRUDController extends BaseController
 {
+    protected $helpers = ['form'];
     public function index()
     {
         $model = new TugasModel();
@@ -26,6 +27,27 @@ class CRUDController extends BaseController
         $model = new TugasModel();
         $nama_tugas = request()->getPost("nama_tugas");
         $deskripsi_tugas = request()->getPost("deskripsi_tugas");
+        $rules = [
+            "nama_tugas" => [
+                "label" => "Nama Tugas",
+                "rules" => "required|min_length[3]",
+                "errors" => [
+                    "required" => "Kolom nama tugas harus diisi",
+                    "min_length" => "panjang harus lebih dari 3"
+                ]
+            ],
+            "deskripsi_tugas" => [
+                "label" => "deskripsi tugas",
+                "rules" => "required",
+                "errors" => [
+                    "required" => "Kolom deskripsi tugas harus diisi"
+                ]
+            ]
+        ];
+
+        if(!$this->validate($rules)){
+            return redirect()->to(base_url('/tambahdata'))->withInput();
+        }
 
         $model->insert([
             "nama_tugas" => $nama_tugas,
@@ -48,7 +70,27 @@ class CRUDController extends BaseController
         $model = new TugasModel();
         $nama_tugas = request()->getPost("nama_tugas");
         $deskripsi_tugas = request()->getPost("deskripsi_tugas");
+        $rules = [
+            "nama_tugas" => [
+                "label" => "Nama Tugas",
+                "rules" => "required|min_length[3]",
+                "errors" => [
+                    "required" => "Kolom nama tugas harus diisi",
+                    "min_length" => "panjang harus lebih dari 3"
+                ]
+            ],
+            "deskripsi_tugas" => [
+                "label" => "deskripsi tugas",
+                "rules" => "required",
+                "errors" => [
+                    "required" => "Kolom deskripsi tugas harus diisi"
+                ]
+            ]
+        ];
 
+        if(!$this->validate($rules)){
+            return redirect()->back()->withInput();
+        }
         $model->update($id, [
             "nama_tugas" => $nama_tugas,
             "deskripsi_tugas" => $deskripsi_tugas
