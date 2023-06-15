@@ -29,13 +29,19 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'CRUDController::index');
-$routes->get('/tambahdata', 'CRUDController::tambah');
-$routes->post('/tambahdata', 'CRUDController::simpan');
-$routes->get('/editdata/(:num)', 'CRUDController::edit/$1');
-$routes->post('/editdata/(:num)', 'CRUDController::update/$1');
-$routes->delete('/hapusdata/(:num)', 'CRUDController::hapus/$1');
+$routes->group('', ["filter" => "auth"], static function($routes){
+    $routes->get('/', 'CRUDController::index');
+    $routes->get('/tambahdata', 'CRUDController::tambah');
+    $routes->post('/tambahdata', 'CRUDController::simpan');
+    $routes->get('/editdata/(:num)', 'CRUDController::edit/$1');
+    $routes->post('/editdata/(:num)', 'CRUDController::update/$1');
+    $routes->delete('/hapusdata/(:num)', 'CRUDController::hapus/$1');
+    $routes->get('/logout', 'AuthController::logout');
+});
 
+
+$routes->get('/login', 'AuthController::index');
+$routes->post('/login', 'AuthController::login');
 
 /*
  * --------------------------------------------------------------------
